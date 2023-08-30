@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<script>
+
+  function functionAlert(msg, myYes) {
+      var confirmBox = $("#confirm");
+      confirmBox.find(".message").text(msg);
+      confirmBox.find(".yes").unbind().click(function() {
+        confirmBox.hide();
+      });
+      confirmBox.find(".yes").click(myYes);
+      confirmBox.show();
+  }
+    
+</script>
+<style>
+button{
+  width: 280px;
+  height: 330px; 
+}
+button:hover {
+  transform: scale(1.1); /* (150% zoom - Note: if the zoom is too large, it will go outside of the viewport) */
+}
+button:hover span:after {
+  opacity: 1;
+  right: 0;
+}
+.btn2 {   
+  background-image: url(   
+'img/faceID.jpg');   
+  background-position: center center;   
+}
+.btn1 {   
+  background:url(./img/scanQR.webp) no-repeat;
+ /* background-image: url(   
+'img/scanQR.webp');*/   
+  background-position: center center;     
+}   
+/*ALERT DIALOG*/
+#confirm {
+  display: none;
+  background-color: #F3F5F6;
+  color: #000000;
+  border: 1px solid #aaa;
+  position: fixed;
+  width: 374px;
+  height: 143px;
+  left: 37%;
+  top: 40%;
+  box-sizing: border-box;
+  text-align: center;
+  border-radius: 25px;
+}
+#confirm button {
+  background-color: #FFFFFF;
+  display: inline-block;
+  border-radius: 12px;
+  border: 4px solid #aaa;
+  padding: 5px;
+  text-align: center;
+  width: 60px;
+  height: 35px;
+  cursor: pointer;
+  position: relative;
+  top: 24px;
+}
+#confirm .message {
+  text-align: center;
+  font-size: 23px;
+  display: inline-block;
+  font-family: Arial, Helvetica, sans-serif;
+}
+#showBoxID{
+  text-align: center;
+  font-size: 23px;
+  display: inline-block;
+  font-family: Arial, Helvetica, sans-serif;
+  position: relative;
+  left: 48%;
+  bottom: 432px;
+}
+</style> 
+ <% include partials/head %> 
+</head>
+<body>
+<% include partials/menu %>
+
+<div class="container-fluid bg-3 text-center">    <% var boxidvalue = (typeof selectedbid !='undefined')? selectedbid : ""; %>
+  <form action="/unlockingwithQR" name="myform" method="post" id="myform"></form>
+    <input type="hidden" id="location_id" form="myform" name="boxid" value="<%=boxidvalue%>">
+  <form action="/unlockingwithFace" name="myform2" method="post" id="myform2"></form>
+    <input type="hidden" id="location_id2" form="myform2" name="boxid" value="<%=boxidvalue%>">
+  <h3><%= page %></h3><br>
+  <button type="submit" class="btn1" form="myform" > </Button> 
+    <% //onclick="document.location='/unlockingwithQR/ =boxidvalue '" %>
+    <div id="confirm">
+      <div class="message">No QR code or Face detected, times up.</div><br>
+      <button class="yes">OK</button>
+    </div>
+  <button type="submit" class="btn2" form="myform2"> </Button>  
+</div>
+<div id="showBoxID">Box ID:  <%= boxidvalue%> </div>
+</body>
+<% include partials/script %>
+<% if (typeof popAlert !=='undefined'){ %>
+<script>functionAlert();</script>
+<% } %>
+</html>

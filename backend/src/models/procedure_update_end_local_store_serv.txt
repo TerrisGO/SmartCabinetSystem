@@ -1,0 +1,30 @@
+BEGIN
+
+     DECLARE finished INTEGER DEFAULT 0;
+     DECLARE BoxId INT;
+     DECLARE ServiceId INT;
+
+    -- declare boxid cursor forfinding any row  when reserving reaching due
+     DECLARE L_S_EndCursor
+     CURSOR FOR 
+     	SELECT `localbox_fkid`,`service_id` FROM `box_servicing` WHERE `expire_datetime` < NOW() AND `service_type`='L_S' AND `service_terminated`='0';
+        
+        -- declare NOT FOUND handler
+    DECLARE CONTINUE HANDLER 
+        FOR NOT FOUND SET finished = 1;
+ 
+    OPEN L_S_EndCursor;
+ 
+    updateLocalStoreBoxDue:LOOP
+        FETCH L_S_EndCursor INTO BoxId, ServiceId;
+        IF finished = 1 THEN 
+            LEAVE  updateLocalStoreBoxDue;
+        END IF;
+        
+        UPDATE `box_servicing` SET `service_terminated`='1'  WHERE `service_id`=ServiceId;
+        UPDATE `boxes` SET `customerpass_qr`=NULL, `staffpass_qr`=NULL,`available_status`='E',`self_reserving`='0',`reserved_by_otherBox`='0',`reservedbyother_box_f_k`=NULL, `reserved_expire_datetime`=NULL WHERE `box_id`=BoxId;
+    END LOOP updateLocalStoreBoxDue;
+    CLOSE L_S_EndCursor;
+    commit;
+
+END

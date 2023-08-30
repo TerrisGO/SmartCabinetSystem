@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<style>
+button{
+    width: 242px;
+    height: 219px;
+}
+button:hover {
+  transform: scale(1.1); /* (150% zoom - Note: if the zoom is too large, it will go outside of the viewport) */
+}
+button:hover span:after {
+  opacity: 1;
+  right: 0;
+}
+.btn1 {   
+  background:url(scmlogook.png) no-repeat;
+ /* background-image: url(   
+'img/scanQR.webp');*/   
+  background-position: center center;     
+}   
+</style> 
+ <% include partials/head %> 
+</head>
+<body>
+<% include partials/menu %>
+
+<div class="container-fluid bg-3 text-center">    
+  <h3><%= page %></h3><br>
+  <button type="submit" onclick="window.location.href='/'" class="btn1"> </Button> 
+    <%var paymstatus =  (typeof showPaymentStatus !== 'undefined') ? showPaymentStatus : "X"%>
+    <% if (paymstatus == "Yes"){%>
+    <h2>Payment Success, Thank You</h2>
+    <h3>Receipt will be sent through to your email</h3>
+    <%}%>
+    <% if (paymstatus == "No"){%>
+      <h2>Sorry your payment has failed</h2>
+      <h3>Due to times up reasons or error.</h3>
+    <%}%>
+    
+    <%var box_IDx =  (typeof selectedbid !== 'undefined') ? selectedbid : "X"%>
+    <h3>Box ID: <%=box_IDx %></h3>
+    <%var varfail = (typeof failed !== 'undefined') ? failed : "fail";%>
+    <% if (varfail == "success"){%>
+    <h3>Unlocking Successfully</h3>
+    <%}else{%>
+      <h3>Unlocking Failed</h3>
+    <%}%>
+</div>
+
+</body>
+<% include partials/script %>
+</html>

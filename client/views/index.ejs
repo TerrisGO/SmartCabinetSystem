@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<style>
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+}
+html{
+  background-color:#eee;
+}
+.containeer{
+  margin: 20px auto;
+  width:400px;
+  height: 338px;
+  /*background-color:#fff;*/
+  display:inline-grid;
+  grid-template-columns: 200px 200px;
+  grid-row: auto auto;
+  grid-column-gap: 20px;
+  grid-row-gap: 20px;
+  justify-content: space-evenly;
+  /*background: linear-gradient(to right, #009fff, #ec2f4b);*/
+}
+.box{
+  background-color: #333;
+  padding: 7px;
+  border-radius: 28px;
+  color: #fff;
+  display: flex;
+  height: 146px;
+  align-items:center;
+  justify-content:center;
+  font-size:40px;
+  font-family:sans-serif;
+  background: #0f0c29;  /* fallback for old browsers */
+  background: -webkit-linear-gradient(to right, #24243e, #302b63, #0f0c29);  /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(to right, #24243e, #302b63, #0f0c29); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */  
+}
+.box a{
+  color:white;
+}
+</style>
+ <% include partials/head %> 
+</head>
+<body>
+<% include partials/menu %>
+
+<div class="container-fluid bg-3 text-center"> 
+  <h3>Location Name:</h3>   
+  <h3><%= page %></h3><br>
+  <div class="containeer">
+    <div class="box"><a href="/local_store">Storage</a></div>
+    <div class="box"><a href="/transfstore_select_localbox">Transfer Storage</a></div>
+    <div class="box"><a href="/faq">F.A.Q</a></div>
+    <div class="box"><a href="/selectboxtounlock">Unlock</a></div>
+  </div>
+</div>
+</body>
+<% include partials/script %>
+</html>

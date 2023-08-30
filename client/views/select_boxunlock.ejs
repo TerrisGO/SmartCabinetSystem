@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<style>
+.grid-container {
+  display: grid;
+  grid-template-columns: repeat(4, 106.25px);
+  grid-gap: 15px;
+  display:inline-grid;
+  justify-content: space-evenly;
+}
+
+.grid-cell {
+  height: 106.25px;
+  border-radius: 3px;
+  background: #acaaaa;
+  text-align: right, bottom;
+}
+/*for the selections*/
+.radios .radio {
+  background-color: #c5e043;
+    display: inline-block;
+    width: 95px;
+    height: 95px;
+    cursor: pointer;
+    position: relative;
+    bottom: 4px;
+}
+
+.radios input[type=radio] {
+    display: none;
+}
+
+.radios input[type=radio]:checked + .radio {
+    background-color: #fc8c03;
+}
+.innerText{
+  font-size: 20px;
+  position: relative;
+  top: 32px;
+}
+
+button {
+    display: block;
+    float: right;
+    line-height: 24pt;
+    padding: 0 20px;
+    border: none;
+    background: #f45702;
+    color: white;
+    letter-spacing: 2px;
+    transition: 0.2s all ease-in-out;
+    border-bottom: 2px solid transparent;
+    outline: none;
+}
+button:hover {
+    background: inherit;
+    color: #f45702;
+    border-bottom: 2px solid #f45702;
+}
+.btn2{
+    width: 125px;
+    height: 40px;
+    position: relative;
+    right: 596px;
+    top: 127px;
+    border-radius: 25px;
+    color: white;
+}
+#box_idtext{
+  position: relative;
+  top: 18px;
+}
+</style>
+ <% include partials/head %> 
+</head>
+<body>
+<% include partials/menu %>
+
+<div class="container-fluid bg-3 text-center">    
+  <h3><%= page %></h3><br>
+  <form action="/selected_box_to_unlock" name="myform" method="post" id="myform"></form>
+  <div class="game-container">
+    <div class="grid-container radios" id="cellInject">
+      <div class="grid-cell">
+          <span><h3 id="box_idtext">Box ID</h3></span>
+      </div>
+    </div>
+  </div>
+  <button type="submit" form="myform"  class="btn2" id="mySubmit"> Proceed > </Button>
+
+</div>
+
+</body>
+<% include partials/script %>
+<script>
+  $("#mySubmit").prop("disabled",true);
+function myRadiobtn(el) { 
+  $("#mySubmit").prop("disabled",false);
+} 
+
+function populateSelect() {
+    // THE JSON ARRAY.
+
+  fetch('http://localhost:3000/selectboxtounlock_list')
+  .then(res => res.json())
+  .then((out) => {
+      console.log('Output: ', out);
+      var birds = out;
+      var ele = document.getElementById('cellInject');
+      for (var i = 0; i < birds.length; i++) {
+      // POPULATE SELECT ELEMENT WITH JSON.
+      ele.innerHTML = ele.innerHTML +
+      '<div class="grid-cell" ><input onClick="myRadiobtn()" type="radio" form="myform" name="boxid" value="' +
+         birds[i]['box_id'] + '" id="' + 'r'+birds[i]['box_id'] + 
+         '" /><label class="radio" for="' + 'r'+birds[i]['box_id'] + '"><p class="innerText">' +
+           birds[i]['box_id'] + '</p></label></div>';
+      }
+  }).catch(err => console.error(err));
+
+}
+populateSelect();
+</script>
+</html>

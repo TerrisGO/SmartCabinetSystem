@@ -1,0 +1,28 @@
+BEGIN
+
+     DECLARE finished INTEGER DEFAULT 0;
+     DECLARE BoxId INT;
+
+    -- declare boxid cursor forfinding any row  when reserving reaching due
+     DECLARE BoxesCursor
+     CURSOR FOR 
+     	SELECT `box_id` FROM `boxes` WHERE `available_status`='R' AND `reserved_expire_datetime` < NOW();
+        
+        -- declare NOT FOUND handler
+    DECLARE CONTINUE HANDLER 
+        FOR NOT FOUND SET finished = 1;
+ 
+    OPEN BoxesCursor;
+ 
+    updateRboxDue: LOOP
+        FETCH BoxesCursor INTO BoxId;
+        IF finished = 1 THEN 
+            LEAVE  updateRboxDue;
+        END IF;
+        
+        UPDATE `boxes` SET `available_status`='E',`self_reserving`='0',`reserved_by_otherBox`='0',`reservedbyother_box_f_k`=NULL, `reserved_expire_datetime`=NULL WHERE `box_id`=BoxId;
+    END LOOP updateRboxDue;
+    CLOSE BoxesCursor;
+    commit;
+
+END

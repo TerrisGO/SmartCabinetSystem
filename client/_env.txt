@@ -1,0 +1,11 @@
+
+change env cabinet client account
+
+CLIENTUSRM=Penang Air Port
+CLIENTUSRM=Penang Sunway Hotel
+CLIENTUSRM=Penang Post Office Komtar
+(choose either one to simulate)
+
+CLIENTPASS=test123
+CLIENTOKEN=xxx(remember to clean this after changing CLIENTUSRM)
+

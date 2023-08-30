@@ -1,0 +1,109 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<script>
+        function myFunction() {
+            var txt;
+            var r = confirm("Press a button!\nEither OK or Cancel.\nThe button you pressed will be displayed in the result window.");
+            if (r == true) {
+            txt = "You pressed OK!";
+            } else {
+            txt = "You pressed Cancel!";
+            }
+            document.getElementById("demo").innerHTML = txt;
+        }
+</script>
+<style>
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+/* Float four columns side by side */
+.column {
+  float: left;
+  width: 25%;
+  padding: 0 10px;
+}
+
+/* Remove extra left and right margins, due to padding */
+.row {margin: 0 -5px;}
+
+/* Clear floats after the columns */
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+/* Responsive columns */
+@media screen and (max-width: 600px) {
+  .column {
+    width: 100%;
+    display: block;
+    margin-bottom: 20px;
+  }
+}
+
+/* Style the counter cards */
+.card {
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  padding: 16px;
+  text-align: center;
+  background-color: #f1f1f1;
+}
+</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Home</title>
+    <!-- BOOTSTRAP CDN -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container p-5">
+        <div class="card">
+            <div class="card-body">
+                     <h2>Welcome,  <%= name %></h2>
+<p>staff infos</p>
+
+<div class="row">
+  <div class="column">
+    <div class="card">
+      <img class="card-img-top" src="https://cdn2.iconfinder.com/data/icons/check-code/100/7-512.png"  width="200" height="200"  alt="Card image cap">
+      <div class="card-body">
+        <h5 class="card-title">A Box number</h5>
+        <p class="card-text">Address Some quick example text to build </p>
+      </div>
+    </div>
+  </div>
+
+  <div class="column">
+    <div class="card">
+      <img class="card-img-top" src="https://cdn2.iconfinder.com/data/icons/check-code/100/7-512.png"  width="200" height="200"  alt="Card image cap">
+      <div class="card-body">
+        <h5 class="card-title">B Box number</h5>
+        <p class="card-text">Address Some quick example text to build </p>
+      </div>
+    </div>
+  </div>
+    <div class="card-body">
+    <h5 class="card-title">Transfer ID: </h5>
+    <h6 class="card-title">332619 </h5>
+      <a href="#" class="card-link btn btn-success">Gather new task</a>
+      <!--a href="#" ></a-->
+      <button onclick="myFunction()" class="card-link btn btn-warning">Cancel current task</button>
+    </div>
+</div>
+                    <a href="/logout" class="btn btn-danger float-right">Logout</a>
+            </div>
+        </div>
+    </div>
+   
+    
+</body>
+</html>

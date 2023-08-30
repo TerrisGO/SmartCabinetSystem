@@ -1,0 +1,118 @@
+The admin api is running with the backend code
+require using the Postman or any REST debugging software
+https://www.postman.com/downloads/
+to sent request to the server <<localhost:3000/+/Endpoint_link>>
+
+Usage info  |   HTTP Method  |   End Point  |  <x> param(s) or values(JSON)
+<Create new admin>
+POST/api/admin/create
+{   
+    "firstname":"any_string",
+    "lastname" :"any_string",
+    "username" :"any_string",
+    "role":"number",
+    "email" :"any_string",
+    "password":"any_string"
+}
+
+<Admin login>
+POST/api/admin/login
+{
+ "email":"any_string",
+ "password":"any_string"
+}
+
+<search admin with ID>
+GET/api/admin/:userId(Number)
+
+<UPDATE admin detail>
+PUT/api/admin/update
+{
+    firstname:"any_string",
+    lastname:"any_string",
+    role:"number(1/4/8)",
+    password:"any_string"
+}
+
+<Delete Admin with ID>
+DELETE/api/admin/:userId(Number)
+
+<search current admin Info>
+GET/api/adminselfinfo
+
+<List all staffs>
+GET/api/staff
+
+<search staff by ID>
+GET/api/staff/:Id(Number)
+
+<Retrive all box_servicing records>
+GET/api/boxservicing
+
+<search box servicing record with ID>
+GET/api/boxservicing/:Id(Number)
+
+<retrieve all transfer allocation records>
+GET /api/transfer_allocation
+
+<search a transfer allocation record with ID>
+GET/api/transfer_allocation/:Id
+
+<retrieve all boxes>
+GET/api/boxes
+
+<search a box detail with id>
+GET/api/box/:Id(Number)
+
+<retrieve all CABINET SET>
+GET/api/cabinet_set
+
+<search cabinet set detail with ID>
+GET/api/cabinet_set/:userId(Number)
+
+<Create new cabinet set>
+POST/api/cabinet_set/create_cabinetset
+{
+    "location_name":"any_string",
+    "gpslocation":"any_string",
+    "totalboxs":"number",
+    "cabinet_addr":"any_string",
+    "cabinet_pass":"any_string",
+    "hardware_detail":"any_string"
+}
+
+<Create new box associate with (exist)cabinet_set>
+POST/api/cabinet_set/createbox
+{
+  "cabinet_fk":"Existing Cabinet ID(Number)"
+}
+
+<Update the cabinetset Details>
+PUT/api/cabinet_set/update_cabinetset
+{
+ "location_name:"any_string",
+ "gpslocation:"any_string", 
+ "totalboxs":"Number",
+ "cabinet_addr":"any_string",
+ "cabinet_pass":"any_string",
+ "hardware_detail":"any_string",
+ "cabinet_id":"Number"
+}
+
+<Update staff Details>
+PUT/api/cabinet_set/update_staff
+{
+"staff_name":"any_string",
+"staff_email":"any_string",
+"staff_pass":"any_string",
+"staff_phone":"10_numbers",
+"staff_addr":"any_string",
+"duty_status":"Online/Offline"
+}
+
+<Update box details>
+PUT/api/cabinet_set/update_box
+{
+  "box_id":"Exist box ID(Number)", 
+  "cabinet_fk":"Exist cabinet_set ID(Number)"
+}

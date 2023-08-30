@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<link rel="stylesheet" href="./stylesheets/userform.css">
+ <% include partials/head %> 
+</head>
+<style>
+/*ALERT DIALOG*/
+#confirm {
+  display: none;
+  background-color: #F3F5F6;
+    color: #000000;
+    border: 1px solid #aaa;
+    position: fixed;
+    width: 550px;
+    height: 225px;
+    left: 29%;
+    top: 29%;
+    box-sizing: border-box;
+    text-align: center;
+    border-radius: 25px;
+}
+#confirm button {
+  background-color: #FFFFFF;
+  display: inline-block;
+  border-radius: 12px;
+  border: 4px solid #aaa;
+  padding: 5px;
+  text-align: center;
+  width: 60px;
+  height: 35px;
+  cursor: pointer;
+  position: relative;
+  top: 12px;
+  left: -64%;
+}
+#confirm .message {
+  text-align: center;
+  font-size: 23px;
+  display: inline-block;
+  font-family: Arial, Helvetica, sans-serif;
+}
+#showBoxID{
+  text-align: center;
+  font-size: 23px;
+  display: inline-block;
+  font-family: Arial, Helvetica, sans-serif;
+  position: relative;
+  left: 48%;
+  bottom: 432px;
+}
+.face_yes{
+    width: 136px !important;
+}
+.face_no{
+    width: 100px !important;
+    position: relative !important;
+    left: 66px !important;
+}
+.face_no2{
+    width: 100px !important;
+    position: relative !important;
+    left: -219px !important;
+    top: 96px !important;
+}
+.button-clicked {
+    background-color: rgb(236, 47, 47) !important;
+}
+</style>
+<body onload="validDate()">
+<% include partials/menu %>
+<!--datepicker-->
+
+<script>
+function disable()
+{
+ document.onkeydown = function (e) 
+ {
+  return false;
+ }
+}
+function enable()
+{
+ document.onkeydown = function (e) 
+ {
+  return true;
+ }
+}
+function functionAlert(msg, myYes) {
+    var confirmBox = $("#confirm");
+    confirmBox.find(".message").text(msg);
+    confirmBox.find(".face_yes").unbind().click(function() {
+        //confirmBox.hide();
+        //$('#facerecogcheck').prop('checked', false); 
+    });
+    confirmBox.find(".face_yes").click(myYes);
+    confirmBox.show();
+    confirmBox.find(".face_no").unbind().click(function() {
+        confirmBox.hide();
+        $('#facerecogcheck').prop('checked', false); 
+    });
+}
+    
+</script>
+<div class="container-fluid bg-3 text-center">    
+  <h3><%= page %></h3><br>
+  
+    <div class="form-us">
+        <form action="/paymentprocess" form="myform" id="myform" name="myform" method="POST">
+            <!--label for="customerName">NAME <em>&#x2a;</em></label>
+            <input id="customerName" name="customerName" required="" type="text" /-->
+            <script
+            src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+            data-key="<%=stripePublishableKey%>"
+            data-amount="100"
+            data-name="Smart Cabinet Malaysia"
+            data-description="Payment for Local Storage"
+            data-image="scmlogo.png"
+            data-locale="auto"
+            data-panel-label='Checkout'>
+            </script>
+            <script>
+            // Hide default stripe button
+            document.getElementsByClassName('stripe-button-el')[0].style.display = 'none';
+            </script> 
+            <!--Stripe API-->
+            <label for="customerEmail">EMAIL <em>&#x2a;</em></label>
+            <input id="customerEmail" onclick="enable();" type="text" form="myform" name="customerEmail" type="email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$" oninput="onclickhandler(this)"  />
+            <label for="customerPhone">PHONE <em>&#x2a;</em></label>
+            <input id="customerPhone" onclick="enable();"  type="tel" form="myform" name="customerPhone" maxlength="10" autocomplete="off" onkeypress="return AllowOnlyNumbers(event);" name="customerPhone"  type="tel" oninput="onclickhandler2(this)" />
+            <hr>
+            <label for="customerEmail">Local storage set duration</label>
+            <label for="customerEmail">RM 12 per day / RM 2 for an hour </label>
+            <label for="customerEmail" class="labeltime">Day(s)</label>
+
+            <input  type="date" id="datepicker" value="" onclick="disable();" onkeydown="disable();" name="date" autocomplete="off" pattern='(?:((?:0[1-9]|1[0-9]|2[0-9])\/(?:0[1-9]|1[0-2])|(?:30)\/(?!02)(?:0[1-9]|1[0-2])|31\/(?:0[13578]|1[02]))\/(?:19|20)[0-9]{2})'>
+            <!--select class="select-css" style="width:200px;" form="myform" id="dayss" name="numb_days" size="1">
+              <option value="0">0</option>
+              <option value="1">1</option>
+              <option value="2">2</option>
+              <option value="3">3</option>
+              <option value="4">4</option>
+            </select-->
+            <label for="customerEmail" class="labeltime">Hour(s) <em>&#x2a;</em></label>
+            <select class="select-css" style="width:200px;" form="myform" id="hourss" name="numb_hours" size="1">
+              <option value="1">1</option>
+              <option value="2">2</option>
+              <option value="3">3</option>
+              <option value="4">4</option>
+              <option value="5">5</option>
+              <option value="6">6</option>
+              <option value="7">7</option>
+              <option value="8">8</option>
+              <option value="9">9</option>
+              <option value="10">10</option>
+              <option value="11">11</option>
+              <option value="12">12</option>
+              <option value="13">13</option>
+              <option value="14">14</option>
+              <option value="15">15</option>
+              <option value="16">16</option>
+              <option value="17">17</option>
+              <option value="18">18</option>
+              <option value="19">19</option>
+              <option value="20">20</option>
+              <option value="21">21</option>
+              <option value="22">22</option>
+              <option value="23">23</option>
+            </select>
+            <div id="priceshow">
+            <label for="customerEmail">Price(RM) </label>
+            <input  id="pricex" value="0" form="myform" name="customerPrice"  type="text" disabled />
+            </div>
+            <label for="customerEmail">Selected local box ID</label>
+            <input id="labelLocalbox" name="labelLocalbox" form="myform"  type="text" disabled value="<%=rlocalboxid%>" />
+            <label for="customerEmail">Current Time</label>
+            <input id="time" name="time"  type="text" disabled  />
+            <label for="customerEmail">Estimate Due </label>
+            <input id="estimateDue" name="estimateDue"  type="text" disabled  />
+            <hr>
+            <input checked disabled class="checkboxs" type="checkbox" id="qrcodecheck" name="selectQR" value="QR">
+            <label for="QR"> Unlocking with QR code</label><br>
+            <% if(typeof facerecFileName !=="undefined"){ %>
+                <input checked disabled class="checkboxs" type="checkbox"  id="facerecogcheck" form="myform" name="selectFaceRecog" value="FaceRecog">
+                <label for="FaceRecognition"> Facial Recognition</label><br>
+            <%}else{%>
+                <input class="checkboxs" type="checkbox" onclick="prepareFaceRecog()" id="facerecogcheck" form="myform" name="selectFaceRecog" value="FaceRecog">
+                <label for="FaceRecognition"> Facial Recognition</label><br>
+            <%}%>
+            <h3>
+                Please provide all the require information</h3>
+            <h3>above before proceeding to payment.
+            </h3>
+            <% if(typeof facerecFileName !=="undefined"){ %>
+            <input type="hidden" id="face_recFilename" form="myform" name="face_recFilename" value="<%=facerecFileName%>">
+            <%}%>
+            <input type="hidden" id="hidden_box1id" form="myform" name="hidden_box1id" value="<%=rlocalboxid%>">
+            <input type="hidden" id="hidden_price" form="myform" name="hidden_price" value="">
+            <button type="submit" id="form_submit" value="submit" form="myform" onclick="ValidateEmail(document.myform.customerEmail, document.myform.customerPhone)" >SUBMIT</button>
+        </form>
+    </div>
+    <div id="confirm">
+        <div id="faceregmessage" class="message">Dear customer, here are the privacy consent for you to agree that the current system will make a record using your face for the facial recognition purpose. The file will get clear after the usage expired date was reached.</div><br>
+        <form action="/start_facial_capture" name="myform_facerecord" method="post" id="myform_facerecord"></form>
+        <input type="hidden" id="reserved_boxid" form="myform_facerecord" name="boxid" value="<%=rlocalboxid%>">
+        <button class="face_yes" type="submit" form="myform_facerecord" id="confrim_facescan" onclick="changeFaceRecogMessage()">Start Capture</button>
+        <button class="face_no" id="cancel_facescan" onclick="cancellingFaceRecogMessage()">Cancel</button>
+    </div><!-- -->
+
+</div>
+
+</body>
+<% include partials/script %>
+
+<script>
+function validDate(){
+    var today = new Date().toISOString().split('T')[0];
+    var nextWeekDate = new Date(new Date().getTime() + 90 * 24 * 60 * 60 * 1000).toISOString().split('T')[0]
+    document.getElementsByName("date")[0].setAttribute('min', today);
+    document.getElementsByName("date")[0].setAttribute('max', nextWeekDate)
+}
+var phoneno = /^\d{10}$/;
+var mailformat = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+function ValidateEmail(inputText, customerPhoneNumber){
+
+    if(inputText.value.match(mailformat) && customerPhoneNumber.value.match(phoneno)){
+        /*alert("Valid email address!");
+        document.myform.customerEmail.focus();*/
+        document.getElementById("form_submit").disabled = false;
+        return true;
+    } else{
+        if (!customerPhoneNumber.value.match(phoneno) || !inputText.value.match(mailformat)){
+            if (!inputText.value.match(mailformat)){
+                alert("You have entered an invalid email!");
+                document.myform.customerEmail.focus();
+                document.getElementById("form_submit").disabled = true;
+            }
+            if (!customerPhoneNumber.value.match(phoneno)){
+                document.myform.customerPhone.focus();
+                alert("You have entered an invalid phone !");
+                document.getElementById("form_submit").disabled = true;
+            }
+        }
+        
+        return false;
+    }
+}
+
+function onclickhandler(e) {
+    if(e.value.match(mailformat)){
+        /*alert("Valid email address!");
+        document.myform.customerEmail.focus();*/
+        document.getElementById("form_submit").disabled = false;
+        return true;
+    }
+  console.log(e.value);
+}
+
+function onclickhandler2(e) {
+    if(e.value.match(phoneno)){
+        /*alert("Valid email address!");
+        document.myform.customerEmail.focus();*/
+        document.getElementById("form_submit").disabled = false;
+        return true;
+    }
+  console.log(e.value);
+}
+
+function changeFaceRecogMessage(){
+    $("#faceregmessage").text('Please Wait for the camera to load... ');
+    $('#confrim_facescan').hide();
+    $('#cancel_facescan').addClass('button-clicked');
+    $('#cancel_facescan').removeClass('face_no');
+    $('#cancel_facescan').addClass('face_no2');
+}
+
+function cancellingFaceRecogMessage(){
+    $("#faceregmessage").text('Dear customer, here are the privacy consent for you to agree that the current system will make a record using your face for the facial recognition purpose. The file will get clear after the usage expired date was reached. ');
+    $('#confrim_facescan').show();
+    $('#cancel_facescan').removeClass('button-clicked');
+    $('#cancel_facescan').addClass('face_no');
+    $('#cancel_facescan').removeClass('face_no2');
+}
+    
+function prepareFaceRecog(){
+    functionAlert();
+}
+
+function checkTime(i) {
+  if (i < 10) {
+    i = "0" + i;
+  }
+  return i;
+}
+
+function startTime() {
+  var today = new Date();
+  var h = today.getHours();
+  var m = today.getMinutes();
+  var s = today.getSeconds();
+  var dd = String(today.getDate()).padStart(2, '0');
+  var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+  var yyyy = today.getFullYear();
+
+  today = dd + '/' + mm + '/' + yyyy;
+  // add a zero in front of numbers<10
+  m = checkTime(m);
+  s = checkTime(s);
+  document.getElementById('time').value= today + " "+ h + ":" + m + ":" + s;
+  t = setTimeout(function() {
+    startTime()
+  }, 500);
+}
+startTime();    
+$(document).ready(function() {
+    function detectDayHourWidget(){
+        var dayn = 0; //parseInt($('#dayss').val());
+        var getduedate = $('#datepicker').val();
+        console.log("getduedate"+  getduedate);
+        if (moment(getduedate, "YYYY-MM-DD", true).isValid()){
+            console.log("getduedate IS DATE");
+            var given = moment(getduedate, "YYYY-MM-DD");
+            var current = moment().startOf('day');
+            //Difference in number of days
+            dayn = moment.duration(given.diff(current)).asDays();
+        }else{
+            getduedate = 0;
+        }
+
+
+        var hourn = parseInt($('#hourss').val());
+        //console.log("hourn "+hourn);
+        if (hourn != 0 || days >= 1) {
+        var pricez = String(countPrice(dayn, hourn));console.log(pricez);
+        var date = returnDate();//'23/02/2017';
+        var time = returnHourMinutes();//'15:42';
+        var dateTime = moment(date + ' ' + time, 'DD/MM/YYYY HH:mm').add(dayn, 'd').add(hourn, 'hours').add(1, 'minutes');
+        $('#estimateDue').prop("value", dateTime);
+        console.log(dateTime.format('YYYY-MM-DD HH:mm'))
+        //$('#pricex').val('mcb');//$("#pricex").text(pricez);//$(this).val()
+        $('#pricex').prop("value", pricez);
+        $('#hidden_price').prop("value", pricez);
+        //$('.stripe-button').data('amount', pricez);
+        StripeCheckout.__app.configurations.button0.amount = Number(pricez)*100;
+        }
+    } 
+    function countPrice(dayn, hourn){
+        var price = '0';
+        if (typeof dayn == 'number' && typeof hourn == 'number'){
+            price = (dayn * 12) + (hourn * 2);
+            console.log(price);
+        }
+        return price;
+    }
+    function returnDate(){
+        var today = new Date();
+        var dd = String(today.getDate()).padStart(2, '0');
+        var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+        var yyyy = today.getFullYear();
+
+        today = dd + '/' + mm + '/' + yyyy;
+        //document.write(today);
+        return today;
+    }
+    function returnHourMinutes(){
+        var d = new Date(); // for now
+        var hrs = d.getHours(); // => 9
+        var mins = d.getMinutes(); 
+
+        timen = hrs + ':' + mins;
+        return timen;
+    }
+    $('#datepicker').change(function(){
+        detectDayHourWidget();
+    });
+    $('#dayss').change(function(){
+        detectDayHourWidget();
+    });
+    $('#hourss').change(function(){
+        detectDayHourWidget();
+    });
+    detectDayHourWidget();
+});
+function AllowOnlyNumbers(e) {
+
+e = (e) ? e : window.event;
+var clipboardData = e.clipboardData ? e.clipboardData : window.clipboardData;
+var key = e.keyCode ? e.keyCode : e.which ? e.which : e.charCode;
+var str = (e.type && e.type == "paste") ? clipboardData.getData('Text') : String.fromCharCode(key);
+    if (!key >= 10 ){
+            return false;
+    }
+return (/^\d+$/.test(str));
+}
+</script>
+</html>

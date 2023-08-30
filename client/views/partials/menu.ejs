@@ -1,0 +1,44 @@
+<style>
+
+body {
+    background: url("https://s3-us-west-2.amazonaws.com/s.cdpn.io/38816/image-from-rawpixel-id-2044837-jpeg.jpg") center center no-repeat;
+}
+</style>  
+<nav class="navbar navbar-default">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>                        
+      </button>
+      <a href="#" class="logo navbar-brand"><img style="display: inline;" src="scmlogo.png" alt="logo" id="logo"/></a>
+    </div>
+    <div class="collapse navbar-collapse" id="myNavbar">
+      <form id="cancelForm" action="/cancel_reserved_box" method="post">
+        <ul class="nav navbar-nav navbar-right">
+          <!--Only for debug purpose
+          <li id="home"><a href="/">HOME</a></li>
+          <li id="about"><a href="/selectboxtounlock">Select Box to Unlock</a></li>
+          <li id="unlock_method"><a href="/unlock">Unlock</a></li>
+          <li id="l_s4"><a href="/local_store">4</a></li>
+          <li id="l_s4b"><a href="/localstore_user_form">4b</a></li>
+          <li id="t_s5"><a href="/transfstore_select_localbox">5</a></li>
+          <li id="t_s5a"><a href="/transfstore_selectplace">5a</a></li>
+          <li id="t_s5b"><a href="/transfstore_select_targetbox">5b</a></li>
+          <li id="t_s5c"><a href="/transferstore_user_form">5c</a></li>
+          <li id="unlocked"><a href="/unlocked">6ef</a></li>-->
+          <% if (typeof rlocalboxid !== "undefined"){%>
+            <input type="hidden" id="hidden_box1id" form="cancelForm" name="hidden_box1id4cancel" value="<%=rlocalboxid%>">
+          <%}%>  
+          <% if (typeof targetbid !== "undefined"){%>
+            <input type="hidden" id="hidden_box2id" form="cancelForm" name="hidden_box2id4cancel" value="<%=targetbid%>">
+          <%}%>    
+          <%if (typeof showPaymentStatus == 'undefined' && menuId !==page){%> 
+          <li id="cancelbtn" type="submit" onclick="cancelForm.submit();"><a href="#">Cancel</a></li>
+          <%}%> 
+        </ul>
+      </form>
+    </div>
+  </div>
+</nav>
